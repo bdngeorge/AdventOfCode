@@ -1,8 +1,7 @@
 if __name__ == "__main__":
     summedPowers = 0
     for game in open("input.txt", "r").read().split("\n"):
-        gameNum, rounds = game.split(":")
-        id = (int)(gameNum[5:])
+        _, rounds = game.split(":")
 
         minimumColors = {
             "red": 0,
