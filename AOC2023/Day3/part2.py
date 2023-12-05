@@ -13,7 +13,7 @@ def CheckNumber(i, j, l, input):
     if not input[i][j+l] in symbolsFound.keys():
       symbolsFound[input[i][j+l]] = []
     symbolsFound[input[i][j+l]].append((i, j+l))
-  for k in range(j-1, j+l+1):
+  for k in range(j-1, j+l+1): #check above and below simultaneously
     if k < 0 or k >= len(input[i]):
       continue
     if i+1 < len(input): #below number
