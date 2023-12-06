@@ -1,20 +1,19 @@
 import re
 
+def GetNumber(string):
+    num = ""
+    for char in string:
+        if char.isdigit():
+            num += char
+    
+    return int(num)
+
 if __name__ == "__main__":
     input = open("input.txt", "r").read().strip().split("\n")
 
     # Parse the input
-    times = re.findall(r'\d+', input[0].split(":")[1])
-    timeStr = ""
-    for time in times:
-        timeStr += time
-    time = int(timeStr)
-
-    distances = re.findall(r'\d+', input[1].split(":")[1])
-    distancesStr = ""
-    for distance in distances:
-        distancesStr += distance
-    distance = int(distancesStr)
+    time = GetNumber(input[0])
+    distance = GetNumber(input[1])
 
     total = 1
     firstWin = -1
