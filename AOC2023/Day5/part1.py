@@ -10,8 +10,8 @@ def FindLocation(current, index, maps):
     next = -1
     for numbers in map[1:]:
         dest, source, range = numbers.split(" ")
-        if (int)(source) <= current and (int)(source) + (int)(range) - 1 >= current:
-            next = (int)(dest) + current - (int)(source)
+        if (int)(source) <= current < (int)(source) + (int)(range):
+            next = (int)(dest) + (current - (int)(source))
             break
     
     if next == -1:

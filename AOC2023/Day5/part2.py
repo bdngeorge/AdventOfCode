@@ -10,8 +10,8 @@ def FindLocation(current, index, maps):
     next = -1
     for numbers in map[1:]:
         dest, source, range = numbers.split(" ")
-        if (int)(source) <= current and (int)(source) + (int)(range) - 1 >= current:
-            next = (int)(dest) + current - (int)(source)
+        if (int)(source) <= current < (int)(source) + (int)(range):
+            next = (int)(dest) + (current - (int)(source))
             break
     
     if next == -1:
@@ -19,16 +19,31 @@ def FindLocation(current, index, maps):
     
     return FindLocation(next, index + 1, maps)
 
+def FindPossibleSeeds(ranges, index, maps):
+    if index >= len(maps):
+        return ranges
+
+    map = maps[index]
+
+    for numbers in map[1:]:
+        dest, source, span = numbers.split(" ")
+        #seedsToChange = [i for i in range((int)(source), (int)(source)+(int)(span))]
+        
+        #check each map 
+        # (cx, cy) (nx, ny)
+        # if cx <= nx <= xy <= cy
+        # if nx <= cx <= ny <= cy
+        # if cx <= nx < ny <= cy
+
+        
+
+
+
 if __name__ == "__main__":
-    input = open("input.txt", "r").read().split("\n")
+    input = open("inputSmall.txt", "r").read().split("\n")
 
     seedRanges = input[0].strip().split(" ")[1:]
-    seeds = []
-    i = 0
-    while i < len(seedRanges):
-        for j in range(i, (int)(seedRanges[i+1])):
-            seeds.append((int)(seedRanges[i]) + j)
-        i += 2
+    print(seedRanges)
 
     #Store the maps in sublists
     maps = []
@@ -40,10 +55,11 @@ if __name__ == "__main__":
         else:
             sublist.append(input[i])
 
+    print("Running...")
     locations = []
-    for seed in seeds:
-        # Run down the maps to find the location
-        locations.append(FindLocation((int)(seed), 0, maps))
+    for i in range(len(seedRanges)):
+        if i % 2 == 0:
+            locations.append(FindPossibleSeeds([(int)(seedRanges[i]), (int)(seedRanges[i])+(int)(seedRanges[i+1])], 0, maps))
     
-    finalLocation = min(locations)
-    print(finalLocation)
+    #finalLocation = min(locations)
+    #print("Location found!\n" + str(finalLocation))
