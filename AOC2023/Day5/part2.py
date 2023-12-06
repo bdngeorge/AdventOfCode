@@ -25,20 +25,20 @@ def FindPossibleSeeds(ranges, index, maps):
 
     map = maps[index]
 
+    newRanges = []
     for numbers in map[1:]:
         dest, source, span = numbers.split(" ")
+        transformation = int(dest) - int(source)
+        transformationRange = [int(source), int(source) + int(span) - 1]
         #seedsToChange = [i for i in range((int)(source), (int)(source)+(int)(span))]
         
-        #check each map 
+        #check each map and apply transformation on source ranges
         # (cx, cy) (nx, ny)
         # if cx <= nx <= xy <= cy
         # if nx <= cx <= ny <= cy
         # if cx <= nx < ny <= cy
 
         
-
-
-
 if __name__ == "__main__":
     input = open("inputSmall.txt", "r").read().split("\n")
 
@@ -59,7 +59,9 @@ if __name__ == "__main__":
     locations = []
     for i in range(len(seedRanges)):
         if i % 2 == 0:
-            locations.append(FindPossibleSeeds([(int)(seedRanges[i]), (int)(seedRanges[i])+(int)(seedRanges[i+1])], 0, maps))
+            x = (int)(seedRanges[i])
+            y = (int)(seedRanges[i+1])+x
+            possibleSeeds = FindPossibleSeeds([[x, y]], 0, maps)
     
     #finalLocation = min(locations)
     #print("Location found!\n" + str(finalLocation))
