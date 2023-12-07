@@ -3,7 +3,7 @@ from functools import cmp_to_key
 
 cardRanks = {"J":1, "2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":9, "T":10, "Q":12, "K":13, "A":14}
 
-def GetHandLocalRank(hand):
+def GetLocalRank_Normal(hand):
     cardDict = c.defaultdict(lambda:0)
     for card in hand[0]:
         cardDict[card] += 1
@@ -24,9 +24,9 @@ def GetHandLocalRank(hand):
     else:
         return 0   
     
-def GetWildCardLocalRank(hand):
+def GetLocalRank_WildCard(hand):
     if 'J' not in hand[0]:
-        return GetHandLocalRank(hand)
+        return GetLocalRank_Normal(hand)
     
     cardDict = c.defaultdict(lambda:0)
     for card in hand[0]:
@@ -47,8 +47,8 @@ def GetWildCardLocalRank(hand):
         return 1
     
 def CompareHands(h1, h2):
-     h1Rank = GetWildCardLocalRank(h1)
-     h2Rank = GetWildCardLocalRank(h2)
+     h1Rank = GetLocalRank_WildCard(h1)
+     h2Rank = GetLocalRank_WildCard(h2)
 
      if h1Rank < h2Rank:
          return -1
