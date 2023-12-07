@@ -1,7 +1,7 @@
 import collections as c
 from functools import cmp_to_key
 
-cardRanks = {"2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":9, "T":10,"J":11, "Q":12, "K":13, "A":14}
+cardRanks = {"J":1, "2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":9, "T":10, "Q":12, "K":13, "A":14}
 
 def GetHandLocalRank(hand):
     cardDict = c.defaultdict(lambda:0)
@@ -23,10 +23,32 @@ def GetHandLocalRank(hand):
         return 1
     else:
         return 0   
-
+    
+def GetWildCardLocalRank(hand):
+    if 'J' not in hand[0]:
+        return GetHandLocalRank(hand)
+    
+    cardDict = c.defaultdict(lambda:0)
+    for card in hand[0]:
+        cardDict[card] += 1
+    values = sorted(cardDict.values())
+    
+    if values == [5] or values == [1,4] or values == [2,3]:
+        return 6
+    elif values == [1,1,3]:
+        return 5
+    elif values == [1,2,2]:
+        if cardDict['J'] == 1:
+            return 4
+        return 5
+    elif values == [1,1,1,2]:
+        return 3
+    else:
+        return 1
+    
 def CompareHands(h1, h2):
-     h1Rank = GetHandLocalRank(h1)
-     h2Rank = GetHandLocalRank(h2)
+     h1Rank = GetWildCardLocalRank(h1)
+     h2Rank = GetWildCardLocalRank(h2)
 
      if h1Rank < h2Rank:
          return -1
@@ -34,7 +56,7 @@ def CompareHands(h1, h2):
          for i in range(len(h1[0])):
              if cardRanks[h1[0][i]] == cardRanks[h2[0][i]]:
                  continue
-             if cardRanks[h1[0][i]] < cardRanks[h2[0][i]]:
+             elif cardRanks[h1[0][i]] < cardRanks[h2[0][i]]:
                  return -1
              else:
                  return 1
