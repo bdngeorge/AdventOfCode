@@ -25,18 +25,27 @@ def FindPossibleSeeds(ranges, index, maps):
 
     map = maps[index]
 
-    newRanges = []
+    newRanges = ranges
     for numbers in map[1:]:
         dest, source, span = numbers.split(" ")
         transformation = int(dest) - int(source)
         transformationRange = [int(source), int(source) + int(span) - 1]
-        #seedsToChange = [i for i in range((int)(source), (int)(source)+(int)(span))]
-        
-        #check each map and apply transformation on source ranges
-        # (cx, cy) (nx, ny)
-        # if cx <= nx <= xy <= cy
-        # if nx <= cx <= ny <= cy
-        # if cx <= nx < ny <= cy
+
+        for range in newRanges:
+            x = range[0]
+            y = range[1]
+            nx = transformationRange[0]
+            ny = transformationRange[1]
+
+            if x <= nx < ny <= y:
+                pass
+            if nx < x <= ny <= y:
+                pass
+            if x <= nx <= y < ny:
+                pass
+            
+
+    print(newRanges)
 
         
 if __name__ == "__main__":
